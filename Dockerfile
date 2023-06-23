@@ -13,8 +13,8 @@ COPY pkg/ pkg/
 
 RUN go build -ldflags="-X 'main.Build=${buildsha}'" -o raspan cmd/raspan/main.go
 
-FROM ubuntu:23.04
-WORKDIR /opt/raspan
+FROM ubuntu:22.04
+WORKDIR /opt
 COPY --from=builder /workspace/raspan raspan
-COPY raspan.db /workspace/raspan.db
-ENTRYPOINT ["raspan","api"]
+COPY raspan.db raspan.db
+CMD ["/opt/raspan", "api"]

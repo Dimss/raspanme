@@ -31,6 +31,7 @@ func mustFS() http.FileSystem {
 
 func (s *Server) Start() {
 	r := gin.Default()
+	r.GET("/", s.DefaultRedirect)
 	r.StaticFS("/ui", mustFS())
 	v1 := r.Group("/v1")
 	{
@@ -38,6 +39,10 @@ func (s *Server) Start() {
 		v1.GET("/question/:catID", s.GetQuestions)
 	}
 	r.Run()
+}
+
+func (s *Server) DefaultRedirect(c *gin.Context) {
+	c.Redirect(http.StatusFound, "/ui")
 }
 
 func (s *Server) GetCategories(c *gin.Context) {
