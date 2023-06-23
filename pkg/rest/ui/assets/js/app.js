@@ -45,6 +45,9 @@ function loadQuestions(catId) {
 
 function parseQuestionSection(question) {
     let answers = ''
+    question.Answer.sort(function (a, b) {
+        return (a.AnswerIndex - b.AnswerIndex);
+    });
     question.Answer.forEach((answer) => {
         answers += `
                 <div class="row">
